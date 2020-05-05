@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
-	skip_before_action :authorized, only: [:create]
+	skip_before_action :authorized, only: [:create, :all_recipes]
 
 	def profile
 		render json: { user: UserSerializer.new(current_user) }, status: :accepted
@@ -13,6 +13,16 @@ class Api::V1::UsersController < ApplicationController
 			render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
 		else
 			render json: { error: 'failed to create user' }, status: :not_acceptable
+		end
+	end
+
+	def all_recipes
+		user = User.find_by(username: params[:username])
+
+		if user
+			render json: { recipes: user.recipes }, status: :accepted
+		else
+			render json: { error: 'failed to find user' }, status: :not_acceptable
 		end
 	end
 
