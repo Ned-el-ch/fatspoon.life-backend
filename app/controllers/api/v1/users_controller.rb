@@ -20,7 +20,22 @@ class Api::V1::UsersController < ApplicationController
 		user = User.find_by(username: params[:username])
 
 		if user
-			render json: { recipes: user.recipes }, status: :accepted
+			render json: user.to_json(
+				include: [recipes: {
+					only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+					include: {
+						user: {
+							only: [:username]
+						},
+						recipe_ingredients: {
+							only: [:weight, :uuid],
+							include: {ingredient: {
+								only: [:uuid]
+							}}
+						}
+					}
+				}]
+				), status: :accepted
 		else
 			render json: { error: 'failed to find user' }, status: :not_acceptable
 		end

@@ -22,15 +22,21 @@ class RecipesController < ApplicationController
 			byebug
 			# render json: { recipe: recipe }, status: :accepted
 			render json: recipe.to_json(
-				# only: [:title, :description],
+				only: [:title, :description],
 				include: {
 					user: {
-						only: [:name]
+						only: [:username]
 					},
-					ingredients: {
-						only: [:uuid, :weight, :name]
+					recipe_ingredients: {
+						only: [:weight, :uuid],
+						include: {
+							ingredient: {
+								only: [:uuid]
+							}
+						}
 					}
-			}), status: :created
+				}
+			), status: :created
 		else
 			render json: { error: 'failed to create recipe' }, status: :not_created
 		end

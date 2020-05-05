@@ -1,5 +1,5 @@
 class RecipeIngredientSerializer < ActiveModel::Serializer
-  attributes :id, :weight
-  has_one :ingredient
-  has_one :recipe
+	has_one :ingredient
+	has_one :recipe
+	attributes :id, :weight
 end

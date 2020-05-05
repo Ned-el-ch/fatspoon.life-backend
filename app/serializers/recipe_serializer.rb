@@ -1,4 +1,4 @@
 class RecipeSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :title, :imageLink, :prepTime, :cookingTime, :description
-  has_one :user
+  attributes :id, :uuid, :title, :imageLink, :prepTime, :cookingTime, :description, :ingredients
+	has_one :user
 end
