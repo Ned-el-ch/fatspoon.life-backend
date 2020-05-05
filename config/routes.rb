@@ -8,5 +8,5 @@ Rails.application.routes.draw do
 		end
 	end
 
-
+	post '/recipes/new', to: 'recipes#create'
 end
