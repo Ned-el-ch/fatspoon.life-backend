@@ -28,10 +28,23 @@ class Api::V1::UsersController < ApplicationController
 							only: [:username]
 						},
 						recipe_ingredients: {
-							only: [:weight, :uuid],
-							include: {ingredient: {
-								only: [:uuid]
-							}}
+							only: [:weight],
+							include: {
+								ingredient: {
+									only: [:uuid]
+								},
+								recipe: {
+									only: [:uuid]
+								}
+							}
+						},
+						user_ingredients: {
+							only: [:weight],
+							include: {
+								ingredient: {
+									only: [:uuid]
+								}
+							}
 						}
 					}
 				}]
@@ -41,10 +54,36 @@ class Api::V1::UsersController < ApplicationController
 		end
 	end
 
+ def update_ingredients
+	user_params[:ingredients].each do |ingredient|
+		ing = Ingredient.find_by(uuid: ingredient[:uuid])
+		if ing
+			ui = UserIngredient.find_by(user: @user, ingredient: ing)
+			if ui
+				ui.update(weight: ingredient[:weight])
+			else
+				UserIngredient.create(user: @user, ingredient: ing, weight: ingredient[:weight])
+			end
+		end
+	end
+	render json: @user.to_json(
+		only: [],
+		include: [
+			user_ingredients: {
+				only: [:weight],
+				include: {
+					ingredient: {
+						only: [:uuid]
+					}
+				}
+			}]
+		), status: :accepted
+	end
+
 	private
 
 	def user_params
-		params.require(:user).permit(:username, :password, :bio, :avatar)
+		params.require(:user).permit(:username, :password, :bio, :avatar, :ingredients => [:uuid, :weight])
 	end
 
 end

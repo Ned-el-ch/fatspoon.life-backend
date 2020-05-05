@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 			post '/login', to: 'auth#create'
 			get '/profile', to: 'users#profile'
 			get '/chefs/:username', to: 'users#all_recipes'
+			post '/ingredients/update', to: 'users#update_ingredients'
 		end
 	end
-
+	
 	post '/recipes/new', to: 'recipes#create'
 end
