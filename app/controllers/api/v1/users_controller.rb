@@ -3,7 +3,37 @@ class Api::V1::UsersController < ApplicationController
 	skip_before_action :authorized, only: [:create, :all_recipes]
 
 	def profile
-		render json: { user: UserSerializer.new(current_user) }, status: :accepted
+		# render json: { user: UserSerializer.new(current_user) }, status: :accepted
+		render json: current_user.to_json(
+			only: [:username],
+			include: [recipes: {
+				only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+				include: {
+					user: {
+						only: [:username]
+					},
+					recipe_ingredients: {
+						only: [:weight],
+						include: {
+							ingredient: {
+								only: [:uuid]
+							},
+							recipe: {
+								only: [:uuid]
+							}
+						}
+					},
+					user_ingredients: {
+						only: [:weight],
+						include: {
+							ingredient: {
+								only: [:uuid]
+							}
+						}
+					}
+				}
+			}]
+			), status: :accepted
 	end
 
 	def create
