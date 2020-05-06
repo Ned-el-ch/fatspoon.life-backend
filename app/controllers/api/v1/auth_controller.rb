@@ -9,7 +9,7 @@ class Api::V1::AuthController < ApplicationController
 			# encode token comes from ApplicationController
 			token = encode_token({ user_id: @user.id })
 			render json: {
-				jwt: token,
+				token: token,
 				user_data: @user.to_json(
 				only: [],
 				include: [
