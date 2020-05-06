@@ -21,6 +21,7 @@ class Api::V1::UsersController < ApplicationController
 
 		if user
 			render json: user.to_json(
+				only: [:username],
 				include: [recipes: {
 					only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 					include: {
@@ -60,14 +61,18 @@ class Api::V1::UsersController < ApplicationController
 		if ing
 			ui = UserIngredient.find_by(user: @user, ingredient: ing)
 			if ui
-				ui.update(weight: ingredient[:weight])
+				if ingredient[:weight] != 0
+					ui.update(weight: ingredient[:weight])
+				else
+					ui.destroy
+				end
 			else
 				UserIngredient.create(user: @user, ingredient: ing, weight: ingredient[:weight])
 			end
 		end
 	end
 	render json: @user.to_json(
-		only: [],
+		only: [:username],
 		include: [
 			user_ingredients: {
 				only: [:weight],
