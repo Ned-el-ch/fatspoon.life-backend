@@ -41,7 +41,49 @@ class Api::V1::UsersController < ApplicationController
 		@user = User.create(user_params)
 		if @user.valid?
 			@token = encode_token({ user_id: @user.id })
-			render json: { user: UserSerializer.new(@user), token: @token }, status: :created
+			render json: {
+				token: @token,
+				user_data: @user.to_json(
+				only: [:username],
+				include: [
+					user_ingredients: {
+						only: [:weight],
+						include: {
+							ingredient: {
+								only: [:uuid]
+							}
+						}
+					},
+					recipes: {
+						only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+						include: {
+							user: {
+								only: [:username]
+							},
+							recipe_ingredients: {
+								only: [:weight],
+								include: {
+									ingredient: {
+										only: [:uuid]
+									},
+									recipe: {
+										only: [:uuid]
+									}
+								}
+							},
+							user_ingredients: {
+								only: [:weight],
+								include: {
+									ingredient: {
+										only: [:uuid]
+									}
+								}
+							}
+						}
+					}
+				]
+			)}, status: :accepted
+			# render json: { user: UserSerializer.new(@user), token: @token }, status: :created
 		else
 			render json: { error: 'failed to create user' }, status: :not_acceptable
 		end
