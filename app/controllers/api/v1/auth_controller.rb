@@ -11,7 +11,7 @@ class Api::V1::AuthController < ApplicationController
 			render json: {
 				token: token,
 				user_data: @user.to_json(
-				only: [],
+				only: [:username],
 				include: [
 					user_ingredients: {
 						only: [:weight],
@@ -20,7 +20,35 @@ class Api::V1::AuthController < ApplicationController
 								only: [:uuid]
 							}
 						}
-					}]
+					},
+					recipes: {
+						only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+						include: {
+							user: {
+								only: [:username]
+							},
+							recipe_ingredients: {
+								only: [:weight],
+								include: {
+									ingredient: {
+										only: [:uuid]
+									},
+									recipe: {
+										only: [:uuid]
+									}
+								}
+							},
+							user_ingredients: {
+								only: [:weight],
+								include: {
+									ingredient: {
+										only: [:uuid]
+									}
+								}
+							}
+						}
+					}
+				]
 			)}, status: :accepted
 			# render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
 		else
