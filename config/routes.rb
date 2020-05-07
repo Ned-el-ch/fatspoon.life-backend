@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 			get '/profile', to: 'users#profile'
 			get '/chefs/:username', to: 'users#all_recipes'
 			post '/ingredients/update', to: 'users#update_ingredients'
+			post '/ingredients/remove', to: 'users#remove_ingredients'
 		end
 	end
 	

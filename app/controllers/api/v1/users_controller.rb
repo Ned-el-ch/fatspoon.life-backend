@@ -128,33 +128,59 @@ class Api::V1::UsersController < ApplicationController
 		end
 	end
 
- def update_ingredients
-	user_params[:ingredients].each do |ingredient|
-		ing = Ingredient.find_by(uuid: ingredient[:uuid])
-		if ing
-			ui = UserIngredient.find_by(user: @user, ingredient: ing)
-			if ui
-				if ingredient[:weight] != 0
-					ui.update(weight: ingredient[:weight])
+	def update_ingredients
+		user_params[:ingredients].each do |ingredient|
+			ing = Ingredient.find_by(uuid: ingredient[:uuid])
+			if ing
+				ui = UserIngredient.find_by(user: @user, ingredient: ing)
+				if ui
+					if ingredient[:weight] != 0
+						ui.update(weight: ingredient[:weight])
+					else
+						ui.destroy
+					end
 				else
-					ui.destroy
+					UserIngredient.create(user: @user, ingredient: ing, weight: ingredient[:weight])
 				end
-			else
-				UserIngredient.create(user: @user, ingredient: ing, weight: ingredient[:weight])
 			end
 		end
-	end
-	render json: @user.to_json(
-		only: [:username],
-		include: [
-			user_ingredients: {
-				only: [:weight],
-				include: {
-					ingredient: {
-						only: [:uuid]
+		render json: @user.to_json(
+			only: [:username],
+			include: [
+				user_ingredients: {
+					only: [:weight],
+					include: {
+						ingredient: {
+							only: [:uuid]
+						}
 					}
 				}
-			}]
+			]
+		), status: :accepted
+	end
+
+	def remove_ingredients
+		user_params[:ingredients].each do |ingredient|
+			ing = Ingredient.find_by(uuid: ingredient[:uuid])
+			if ing
+				ui = UserIngredient.find_by(user: @user, ingredient: ing)
+				if ui
+					ui.destroy
+				end
+			end
+		end
+		render json: @user.to_json(
+			only: [:username],
+			include: [
+				user_ingredients: {
+					only: [:weight],
+					include: {
+						ingredient: {
+							only: [:uuid]
+						}
+					}
+				}
+			]
 		), status: :accepted
 	end
 
