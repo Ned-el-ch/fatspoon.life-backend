@@ -134,11 +134,7 @@ class Api::V1::UsersController < ApplicationController
 			if ing
 				ui = UserIngredient.find_by(user: @user, ingredient: ing)
 				if ui
-					if ingredient[:weight] != 0
-						ui.update(weight: ingredient[:weight])
-					else
-						ui.destroy
-					end
+					ui.update(weight: ingredient[:weight])
 				else
 					UserIngredient.create(user: @user, ingredient: ing, weight: ingredient[:weight])
 				end
