@@ -46,7 +46,6 @@ class RecipesController < ApplicationController
 	end
 
 	def show
-		byebug
 		recipe = Recipe.find_by(uuid: params[:uuid])
 		if recipe
 			render json: recipe.to_json(
