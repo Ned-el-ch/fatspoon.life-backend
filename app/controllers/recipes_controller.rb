@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
 	skip_before_action :authorized, only: [:show]
 
 	def create
+		recipe_exists = Recipe.find_by(uuid: recipe_params[:uuid])
 		recipe = Recipe.new
 		recipe.title = recipe_params[:title]
 		recipe.imageLink = recipe_params[:imageLink]
@@ -13,7 +14,7 @@ class RecipesController < ApplicationController
 		recipe.uuid = recipe_params[:uuid]
 		recipe.servingCount = recipe_params[:servingCount]
 		recipe.user = @user
-		if recipe.save
+		if !recipe_exists && recipe.save
 			ingredients = recipe_params[:ingredients]
 			ingredients.each do |ing|
 				ingredient_exists = Ingredient.find_by(uuid: ing[:uuid])
