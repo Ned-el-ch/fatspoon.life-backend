@@ -46,6 +46,7 @@ class RecipesController < ApplicationController
 	end
 
 	def show
+		byebug
 		recipe = Recipe.find_by(uuid: params[:uuid])
 		if recipe
 			render json: recipe.to_json(
@@ -65,7 +66,7 @@ class RecipesController < ApplicationController
 				}
 			), status: :accepted
 		else
-			render json: { error: 'failed to find recipe' }, status: :not_created
+			render json: { error: 'failed to find recipe' }, status: :not_acceptable
 		end
 	end
 
