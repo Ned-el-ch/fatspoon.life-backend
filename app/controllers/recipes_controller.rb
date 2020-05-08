@@ -21,7 +21,6 @@ class RecipesController < ApplicationController
 					RecipeIngredient.create(ingredient: ingredient_exists, recipe: recipe, weight: ing[:weight])
 				end
 			end
-			byebug
 			# render json: { recipe: recipe }, status: :accepted
 			render json: recipe.to_json(
 				only: [:title, :description],
@@ -38,9 +37,9 @@ class RecipesController < ApplicationController
 						}
 					}
 				}
-			), status: :created
+			), status: :accepted
 		else
-			render json: { error: 'failed to create recipe' }, status: :not_created
+			render json: { error: 'failed to create recipe' }, status: :not_acceptable
 		end
 	end
 
