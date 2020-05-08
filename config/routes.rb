@@ -11,4 +11,5 @@ Rails.application.routes.draw do
 	end
 	
 	post '/recipes/new', to: 'recipes#create'
+	get '/recipes/:uuid', to: 'recipes#show'
 end

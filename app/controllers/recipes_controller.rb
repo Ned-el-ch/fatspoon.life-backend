@@ -1,4 +1,7 @@
 class RecipesController < ApplicationController
+
+	skip_before_action :authorized, only: [:show]
+
 	def create
 		recipe = Recipe.new
 		recipe.title = recipe_params[:title]
@@ -39,6 +42,30 @@ class RecipesController < ApplicationController
 			), status: :created
 		else
 			render json: { error: 'failed to create recipe' }, status: :not_created
+		end
+	end
+
+	def show
+		recipe = Recipe.find_by(uuid: params[:uuid])
+		if recipe
+			render json: recipe.to_json(
+				only: [:title, :description],
+				include: {
+					user: {
+						only: [:username]
+					},
+					recipe_ingredients: {
+						only: [:weight, :uuid],
+						include: {
+							ingredient: {
+								only: [:uuid]
+							}
+						}
+					}
+				}
+			), status: :accepted
+		else
+			render json: { error: 'failed to find recipe' }, status: :not_created
 		end
 	end
 
