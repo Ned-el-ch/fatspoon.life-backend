@@ -13,7 +13,6 @@ class RecipesController < ApplicationController
 		recipe.uuid = recipe_params[:uuid]
 		recipe.servingCount = recipe_params[:servingCount]
 		recipe.user = @user
-		byebug
 		if recipe.save
 			ingredients = recipe_params[:ingredients]
 			ingredients.each do |ing|
