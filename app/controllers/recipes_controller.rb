@@ -48,7 +48,7 @@ class RecipesController < ApplicationController
 		recipe = Recipe.find_by(uuid: params[:uuid])
 		if recipe
 			render json: recipe.to_json(
-				only: [:title, :description],
+				only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
 				include: {
 					user: {
 						only: [:username]
