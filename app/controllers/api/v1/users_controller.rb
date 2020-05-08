@@ -111,14 +111,6 @@ class Api::V1::UsersController < ApplicationController
 									only: [:uuid]
 								}
 							}
-						},
-						user_ingredients: {
-							only: [:weight],
-							include: {
-								ingredient: {
-									only: [:uuid]
-								}
-							}
 						}
 					}
 				}]
