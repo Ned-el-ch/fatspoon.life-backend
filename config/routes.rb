@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+	resources :recipe_meals
 	namespace :api do
 		namespace :v1 do
 			resources :users, only: [:create]
@@ -10,6 +12,11 @@ Rails.application.routes.draw do
 		end
 	end
 	
-	post '/recipes/new', to: 'recipes#create'
 	get '/recipes/:uuid', to: 'recipes#show'
+	post '/recipes/new', to: 'recipes#create'
+	post '/recipes/star', to: 'recipes#remove_ingredients'
+	post '/recipes/unstar', to: 'recipes#remove_ingredients'
+	post '/meal_planner/add', to: 'recipes#add_recipe_to_meal_planner'
+	post '/meal_planner/remove', to: 'recipes#remove_recipe_from_meal_planner'
+
 end

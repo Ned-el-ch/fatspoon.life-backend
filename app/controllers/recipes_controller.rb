@@ -68,6 +68,18 @@ class RecipesController < ApplicationController
 		end
 	end
 
+	def star_recipe
+	end
+
+	def unstar_recipe
+	end
+
+	def add_recipe_to_meal_planner
+	end
+
+	def remove_recipe_from_meal_planner
+	end
+
 	private
 	def recipe_params
 		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, {:ingredients => [:uuid, :weight]} )
