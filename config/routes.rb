@@ -14,8 +14,8 @@ Rails.application.routes.draw do
 	
 	get '/recipes/:uuid', to: 'recipes#show'
 	post '/recipes/new', to: 'recipes#create'
-	post '/recipes/star', to: 'recipes#remove_ingredients'
-	post '/recipes/unstar', to: 'recipes#remove_ingredients'
+	post '/recipes/star', to: 'recipes#star_recipe'
+	post '/recipes/unstar', to: 'recipes#unstar_recipe'
 	post '/meal_planner/add', to: 'recipes#add_recipe_to_meal_planner'
 	post '/meal_planner/remove', to: 'recipes#remove_recipe_from_meal_planner'
 

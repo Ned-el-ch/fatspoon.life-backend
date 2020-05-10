@@ -22,6 +22,14 @@ class Api::V1::UsersController < ApplicationController
 								only: [:uuid]
 							}
 						}
+					},
+					recipe_stars: {
+						only: [],
+						include: {
+							recipe: {
+								only: [:uuid]
+							}
+						}
 					}
 				}
 			},
@@ -54,6 +62,14 @@ class Api::V1::UsersController < ApplicationController
 							}
 						}
 					},
+					recipe_stars: {
+						only: [],
+						include: {
+							recipe: {
+								only: [:uuid]
+							}
+						}
+					}
 					recipes: {
 						only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 						include: {
@@ -71,11 +87,11 @@ class Api::V1::UsersController < ApplicationController
 									}
 								}
 							},
-							user_ingredients: {
-								only: [:weight],
+							recipe_stars: {
+								only: [],
 								include: {
-									ingredient: {
-										only: [:uuid]
+									user: {
+										only: [:username]
 									}
 								}
 							}
@@ -107,6 +123,14 @@ class Api::V1::UsersController < ApplicationController
 								ingredient: {
 									only: [:uuid]
 								},
+								recipe: {
+									only: [:uuid]
+								}
+							}
+						},
+						recipe_stars: {
+							only: [],
+							include: {
 								recipe: {
 									only: [:uuid]
 								}

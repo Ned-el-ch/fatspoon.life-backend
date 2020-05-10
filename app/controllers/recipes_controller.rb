@@ -60,6 +60,14 @@ class RecipesController < ApplicationController
 								only: [:uuid, :name]
 							}
 						}
+					},
+					recipe_stars: {
+						only: [],
+						include: {
+							user: {
+								only: [:username]
+							}
+						}
 					}
 				}
 			), status: :accepted
@@ -69,19 +77,121 @@ class RecipesController < ApplicationController
 	end
 
 	def star_recipe
+		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
+		rs = RecipeStar.find_by(recipe: recipe, user: @user)
+		if recipe && !rs
+			rs = RecipeStar.new
+			rs.recipe = recipe
+			rs.user = @user
+			if rs.save
+				render json: recipe.to_json(
+					only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
+					include: {
+						user: {
+							only: [:username]
+						},
+						recipe_ingredients: {
+							only: [:weight],
+							include: {
+								ingredient: {
+									only: [:uuid, :name]
+								}
+							}
+						},
+						recipe_stars: {
+							only: [],
+							include: {
+								user: {
+									only: [:username]
+								}
+							}
+						},
+						recipe_meals: {
+							only: [:planned_date],
+							include: {
+								recipe: {
+									only: [:uuid]
+								}
+							}
+						}
+					}
+				), status: :accepted
+			else
+				render json: { error: 'failed to find recipe' }, status: :not_acceptable
+			end
+		end
 	end
 
 	def unstar_recipe
+		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
+		rs = RecipeStar.find_by(recipe: recipe, user: @user)
+		if recipe && rs
+			rs.destroy
+			render json: { success: 'recipe unstarred' }, status: :accepted
+		else
+			render json: { error: 'failed to find recipe' }, status: :not_acceptable
+		end
 	end
 
 	def add_recipe_to_meal_planner
+		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
+		rm = RecipeStar.find_by(recipe: recipe, user: @user)
+		if recipe && !rm
+			rm = RecipeStar.new
+			rm.recipe = recipe
+			rm.user = @user
+			if rm.save
+				render json: recipe.to_json(
+					only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
+					include: {
+						user: {
+							only: [:username]
+						},
+						recipe_ingredients: {
+							only: [:weight],
+							include: {
+								ingredient: {
+									only: [:uuid, :name]
+								}
+							}
+						},
+						recipe_stars: {
+							only: [],
+							include: {
+								user: {
+									only: [:username]
+								}
+							}
+						},
+						recipe_meals: {
+							only: [:planned_date],
+							include: {
+								recipe: {
+									only: [:uuid]
+								}
+							}
+						}
+					}
+				), status: :accepted
+			else
+				render json: { error: 'failed to find recipe' }, status: :not_acceptable
+			end
+		end
 	end
 
 	def remove_recipe_from_meal_planner
+		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
+		rm = RecipeMeal.find_by(recipe: recipe, user: @user)
+		if recipe && rm
+			rm.destroy
+			render json: { success: 'recipe removed from meal plan' }, status: :accepted
+		else
+			render json: { error: 'failed to find recipe' }, status: :not_acceptable
+		end
 	end
 
 	private
 	def recipe_params
-		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, {:ingredients => [:uuid, :weight]} )
+		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, :planned_date, {:ingredients => [:uuid, :weight]} )
 	end
 end

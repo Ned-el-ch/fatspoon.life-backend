@@ -34,6 +34,14 @@ class Api::V1::AuthController < ApplicationController
 										only: [:uuid]
 									}
 								}
+							},
+							recipe_stars: {
+								only: [],
+								include: {
+									user: {
+										only: [:username]
+									}
+								}
 							}
 						}
 					}
