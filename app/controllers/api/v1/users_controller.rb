@@ -6,7 +6,8 @@ class Api::V1::UsersController < ApplicationController
 		# render json: { user: UserSerializer.new(current_user) }, status: :accepted
 		render json: current_user.to_json(
 			only: [:username],
-			include: [recipes: {
+			include: {
+				recipes: {
 				only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 				include: {
 					user: {
@@ -41,8 +42,7 @@ class Api::V1::UsersController < ApplicationController
 					}
 				}
 			}
-		]
-			), status: :accepted
+		}), status: :accepted
 	end
 
 	def create
