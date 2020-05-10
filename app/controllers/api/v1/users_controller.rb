@@ -69,7 +69,7 @@ class Api::V1::UsersController < ApplicationController
 								only: [:uuid]
 							}
 						}
-					}
+					},
 					recipes: {
 						only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 						include: {
