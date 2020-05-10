@@ -53,7 +53,7 @@ class Api::V1::UsersController < ApplicationController
 				token: @token,
 				user_data: @user.to_json(
 				only: [:username],
-				include: [
+				include: {
 					user_ingredients: {
 						only: [:weight],
 						include: {
@@ -97,7 +97,7 @@ class Api::V1::UsersController < ApplicationController
 							}
 						}
 					}
-				]
+				}
 			)}, status: :accepted
 			# render json: { user: UserSerializer.new(@user), token: @token }, status: :created
 		else
@@ -183,7 +183,7 @@ class Api::V1::UsersController < ApplicationController
 		end
 		render json: @user.to_json(
 			only: [:username],
-			include: [
+			include: {
 				user_ingredients: {
 					only: [:weight],
 					include: {
@@ -192,7 +192,7 @@ class Api::V1::UsersController < ApplicationController
 						}
 					}
 				}
-			]
+			}
 		), status: :accepted
 	end
 

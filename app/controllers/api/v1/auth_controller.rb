@@ -12,7 +12,7 @@ class Api::V1::AuthController < ApplicationController
 				token: token,
 				user_data: @user.to_json(
 				only: [:username],
-				include: [
+				include: {
 					user_ingredients: {
 						only: [:weight],
 						include: {
@@ -45,7 +45,7 @@ class Api::V1::AuthController < ApplicationController
 							}
 						}
 					}
-				]
+				}
 			)}, status: :accepted
 			# render json: { user: UserSerializer.new(@user), jwt: token }, status: :accepted
 		else
