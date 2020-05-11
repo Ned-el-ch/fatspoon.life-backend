@@ -168,7 +168,7 @@ class RecipesController < ApplicationController
 							}
 						},
 						recipe_meals: {
-							only: [:uuid, :planned_date, :multiplier],
+							only: [:id, :planned_date, :multiplier],
 							include: {
 								recipe: {
 									only: [:uuid]
@@ -178,7 +178,7 @@ class RecipesController < ApplicationController
 					}
 				), status: :accepted
 			else
-				render json: { error: 'failed to find recipe' }, status: :not_acceptable
+				render json: { error: 'Something else went wrong' }, status: :not_acceptable
 			end
 		else
 			render json: { error: 'failed to find recipe' }, status: :not_acceptable
