@@ -135,9 +135,8 @@ class RecipesController < ApplicationController
 
 	def add_recipe_to_meal_planner
 		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
-		rm = RecipeMeal.find_by(recipe: recipe, user: @user)
 		# byebug
-		if recipe && !rm
+		if recipe
 			rm = RecipeMeal.new
 			rm.recipe = recipe
 			rm.user = @user
