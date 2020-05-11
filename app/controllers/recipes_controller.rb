@@ -186,17 +186,17 @@ class RecipesController < ApplicationController
 
 	def remove_recipe_from_meal_planner
 		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
-		rm = RecipeMeal.find_by(recipe: recipe, user: @user)
-		if recipe && rm
+		rm = RecipeMeal.find_by(id: recipe_params[:rmid])
+		if rm
 			rm.destroy
 			render json: { success: 'recipe removed from meal plan' }, status: :accepted
 		else
-			render json: { error: 'failed to find recipe' }, status: :not_acceptable
+			render json: { error: 'failed to find meal' }, status: :not_acceptable
 		end
 	end
 
 	private
 	def recipe_params
-		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, :planned_date, :multiplier, {:ingredients => [:uuid, :weight]} )
+		params.require(:recipe).permit(:rmid, :title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, :planned_date, :multiplier, {:ingredients => [:uuid, :weight]} )
 	end
 end
