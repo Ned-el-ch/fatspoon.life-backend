@@ -43,7 +43,7 @@ class Api::V1::UsersController < ApplicationController
 					}
 				},
 				recipe_meals: {
-					only: [:multiplier, :planned_date],
+					only: [:id, :multiplier, :planned_date],
 					include: {
 						recipe: {
 							only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],

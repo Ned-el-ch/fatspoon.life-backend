@@ -145,7 +145,7 @@ class RecipesController < ApplicationController
 			# byebug
 			if rm.save
 				render json: rm.to_json(
-					only: [:multiplier, :planned_date],
+					only: [:id, :multiplier, :planned_date],
 					include: {
 						recipe: {
 							only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
