@@ -107,7 +107,7 @@ class RecipesController < ApplicationController
 							}
 						},
 						recipe_meals: {
-							only: [:planned_date],
+							only: [:planned_date, :multiplier],
 							include: {
 								recipe: {
 									only: [:uuid]
@@ -164,7 +164,7 @@ class RecipesController < ApplicationController
 							}
 						},
 						recipe_meals: {
-							only: [:planned_date],
+							only: [:planned_date, :multiplier],
 							include: {
 								recipe: {
 									only: [:uuid]
