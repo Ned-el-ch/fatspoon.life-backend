@@ -4,4 +4,5 @@ class Recipe < ApplicationRecord
 	has_many :users, through: :recipe_stars
 	has_many :recipe_ingredients
 	has_many :ingredients, through: :recipe_ingredients
+	has_many :recipe_meals
 end
