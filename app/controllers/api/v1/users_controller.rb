@@ -8,41 +8,42 @@ class Api::V1::UsersController < ApplicationController
 			only: [:username],
 			include: {
 				recipes: {
-				only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
-				include: {
-					user: {
-						only: [:username]
-					},
-					recipe_ingredients: {
-						only: [:weight],
-						include: {
-							ingredient: {
-								only: [:uuid]
-							},
-							recipe: {
-								only: [:uuid]
+					only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+					include: {
+						user: {
+							only: [:username]
+						},
+						recipe_ingredients: {
+							only: [:weight],
+							include: {
+								ingredient: {
+									only: [:uuid]
+								},
+								recipe: {
+									only: [:uuid]
+								}
 							}
-						}
-					},
-					recipe_stars: {
-						only: [],
-						include: {
-							recipe: {
-								only: [:uuid]
+						},
+						recipe_stars: {
+							only: [],
+							include: {
+								recipe: {
+									only: [:uuid]
+								}
 							}
 						}
 					}
-				}
-			},
-			user_ingredients: {
-				only: [:weight],
-				include: {
-					ingredient: {
-						only: [:uuid]
+				},
+				user_ingredients: {
+					only: [:weight],
+					include: {
+						ingredient: {
+							only: [:uuid]
+						}
 					}
 				}
 			}
-		}), status: :accepted
+		), status: :accepted
 	end
 
 	def create
