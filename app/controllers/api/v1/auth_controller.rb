@@ -44,6 +44,38 @@ class Api::V1::AuthController < ApplicationController
 								}
 							}
 						}
+					},
+					recipe_meals: {
+						only: [:id, :multiplier, :planned_date],
+						include: {
+							recipe: {
+								only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+								include: {
+									user: {
+										only: [:username]
+									},
+									recipe_ingredients: {
+										only: [:weight],
+										include: {
+											ingredient: {
+												only: [:uuid]
+											},
+											recipe: {
+												only: [:uuid]
+											}
+										}
+									},
+									recipe_stars: {
+										only: [],
+										include: {
+											recipe: {
+												only: [:uuid]
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			)}, status: :accepted
