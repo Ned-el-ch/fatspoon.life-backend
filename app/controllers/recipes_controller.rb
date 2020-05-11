@@ -144,33 +144,33 @@ class RecipesController < ApplicationController
 			rm.multiplier = recipe_params[:multiplier]
 			# byebug
 			if rm.save
-				render json: recipe.to_json(
-					only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
+				render json: rm.to_json(
+					only: [:multiplier, :planned_date],
 					include: {
-						user: {
-							only: [:username]
-						},
-						recipe_ingredients: {
-							only: [:weight],
-							include: {
-								ingredient: {
-									only: [:uuid, :name]
-								}
-							}
-						},
-						recipe_stars: {
-							only: [],
+						recipe: {
+							only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 							include: {
 								user: {
 									only: [:username]
-								}
-							}
-						},
-						recipe_meals: {
-							only: [:id, :planned_date, :multiplier],
-							include: {
-								recipe: {
-									only: [:uuid]
+								},
+								recipe_ingredients: {
+									only: [:weight],
+									include: {
+										ingredient: {
+											only: [:uuid]
+										},
+										recipe: {
+											only: [:uuid]
+										}
+									}
+								},
+								recipe_stars: {
+									only: [],
+									include: {
+										recipe: {
+											only: [:uuid]
+										}
+									}
 								}
 							}
 						}
