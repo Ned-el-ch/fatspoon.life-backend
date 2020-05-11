@@ -135,11 +135,13 @@ class RecipesController < ApplicationController
 
 	def add_recipe_to_meal_planner
 		recipe = Recipe.find_by(uuid: recipe_params[:uuid])
-		rm = RecipeStar.find_by(recipe: recipe, user: @user)
+		rm = RecipeMeal.find_by(recipe: recipe, user: @user)
 		if recipe && !rm
-			rm = RecipeStar.new
+			rm = RecipeMeal.new
 			rm.recipe = recipe
 			rm.user = @user
+			rm.planned_date = recipe_params[:planned_date].to_datetime.strftime('%Y-%m-%d %H:%M:%S')
+			rm.multiplier = recipe_params[:multiplier]
 			if rm.save
 				render json: recipe.to_json(
 					only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
@@ -192,6 +194,6 @@ class RecipesController < ApplicationController
 
 	private
 	def recipe_params
-		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, :planned_date, {:ingredients => [:uuid, :weight]} )
+		params.require(:recipe).permit(:title, :imageLink, :prepTime, :cookingTime, :description, :instructions, :uuid, :servingCount, :planned_date, :multiplier, {:ingredients => [:uuid, :weight]} )
 	end
 end
