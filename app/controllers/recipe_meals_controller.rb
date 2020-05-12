@@ -43,8 +43,7 @@ class RecipeMealsController < ApplicationController
 	def update_multiplier
 		rm = RecipeMeal.find_by(id: meal_params[:id])
 		if rm
-			rm.multiplier = meal_params[:multiplier]
-			rm.update
+			rm.update(multiplier: meal_params[:multiplier])
 			render json: rm.to_json(
 				only: [:id, :multiplier, :planned_date],
 				include: {
