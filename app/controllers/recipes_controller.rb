@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
 						only: [:weight, :uuid],
 						include: {
 							ingredient: {
-								only: [:uuid]
+								only: [:uuid, :name]
 							}
 						}
 					}
@@ -157,7 +157,7 @@ class RecipesController < ApplicationController
 									only: [:weight],
 									include: {
 										ingredient: {
-											only: [:uuid]
+											only: [:uuid, :name]
 										},
 										recipe: {
 											only: [:uuid]
