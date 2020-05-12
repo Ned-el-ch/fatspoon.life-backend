@@ -18,4 +18,8 @@ Rails.application.routes.draw do
 	post '/meal_planner/add', to: 'recipes#add_recipe_to_meal_planner'
 	post '/meal_planner/remove', to: 'recipes#remove_recipe_from_meal_planner'
 
+	get '/meal_planner/meals', to: 'recipe_meals#meals'
+	post '/meal_planner/update_multiplier', to: 'recipe_meals#update_multiplier'
+	post '/meal_planner/destroy', to: 'recipe_meals#destroy'
+
 end
