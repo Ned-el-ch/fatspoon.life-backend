@@ -81,7 +81,7 @@ class RecipeMealsController < ApplicationController
 		end
 	end
 
-	def delete
+	def destroy
 		rm = RecipeMeal.find_by(id: meal_params[:id])
 		if rm
 			rm.destroy
