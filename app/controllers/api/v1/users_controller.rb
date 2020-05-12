@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
 							only: [:weight],
 							include: {
 								ingredient: {
-									only: [:uuid]
+									only: [:uuid, :name]
 								},
 								recipe: {
 									only: [:uuid]
@@ -38,7 +38,7 @@ class Api::V1::UsersController < ApplicationController
 					only: [:weight],
 					include: {
 						ingredient: {
-							only: [:uuid]
+							only: [:uuid, :name]
 						}
 					}
 				},
@@ -55,7 +55,7 @@ class Api::V1::UsersController < ApplicationController
 									only: [:weight],
 									include: {
 										ingredient: {
-											only: [:uuid]
+											only: [:uuid, :name]
 										},
 										recipe: {
 											only: [:uuid]
@@ -91,7 +91,7 @@ class Api::V1::UsersController < ApplicationController
 						only: [:weight],
 						include: {
 							ingredient: {
-								only: [:uuid]
+								only: [:uuid, :name]
 							}
 						}
 					},
@@ -113,7 +113,7 @@ class Api::V1::UsersController < ApplicationController
 								only: [:weight],
 								include: {
 									ingredient: {
-										only: [:uuid]
+										only: [:uuid, :name]
 									},
 									recipe: {
 										only: [:uuid]
@@ -154,7 +154,7 @@ class Api::V1::UsersController < ApplicationController
 							only: [:weight],
 							include: {
 								ingredient: {
-									only: [:uuid]
+									only: [:uuid, :name]
 								},
 								recipe: {
 									only: [:uuid]
@@ -196,7 +196,7 @@ class Api::V1::UsersController < ApplicationController
 					only: [:weight],
 					include: {
 						ingredient: {
-							only: [:uuid]
+							only: [:uuid, :name]
 						}
 					}
 				}
@@ -221,7 +221,7 @@ class Api::V1::UsersController < ApplicationController
 					only: [:weight],
 					include: {
 						ingredient: {
-							only: [:uuid]
+							only: [:uuid, :name]
 						}
 					}
 				}

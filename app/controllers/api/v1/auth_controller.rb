@@ -31,7 +31,7 @@ class Api::V1::AuthController < ApplicationController
 								only: [:weight],
 								include: {
 									ingredient: {
-										only: [:uuid]
+										only: [:uuid, :name]
 									}
 								}
 							},
@@ -58,7 +58,7 @@ class Api::V1::AuthController < ApplicationController
 										only: [:weight],
 										include: {
 											ingredient: {
-												only: [:uuid]
+												only: [:uuid, :name]
 											},
 											recipe: {
 												only: [:uuid]
