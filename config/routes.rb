@@ -22,6 +22,6 @@ Rails.application.routes.draw do
 	post '/meal_planner/update_multiplier', to: 'recipe_meals#update_multiplier'
 	post '/meal_planner/destroy', to: 'recipe_meals#destroy'
 
-	get '/search', to: 'search#search'
+	get '/search/:query', to: 'search#search'
 
 end
