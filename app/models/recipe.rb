@@ -1,8 +1,8 @@
 class Recipe < ApplicationRecord
 
 	include PgSearch
-	multisearchable :against => [:title, :description, :instructions]
-	# pg_search_scope :search_by_term, against: [:title, :description, :instructions],
+	# multisearchable :against => [:title, :description, :instructions]
+	pg_search_scope :search, against: [:title, :description, :instructions],
 	# 	using: {
 	# 		tsearch: {
 	# 			any_word: true,
