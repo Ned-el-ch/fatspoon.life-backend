@@ -4,6 +4,6 @@ class SearchController < ApplicationController
 
 	def search
 		recipes = Recipe.search(params[:query])
-		render json: recipes
+		render json: recipes, status: :accepted
 	end
 end

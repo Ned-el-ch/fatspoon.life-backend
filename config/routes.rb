@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 			post '/ingredients/remove', to: 'users#remove_ingredients'
 		end
 	end
-	
+
 	get '/recipes/:uuid', to: 'recipes#show'
 	post '/recipes/new', to: 'recipes#create'
 	post '/recipes/star', to: 'recipes#star_recipe'
