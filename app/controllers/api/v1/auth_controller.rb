@@ -45,6 +45,35 @@ class Api::V1::AuthController < ApplicationController
 							}
 						}
 					},
+					recipe_stars: {
+						only: [],
+						include: {
+							recipe: {
+								only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
+								include: {
+									user: {
+										only: [:username]
+									},
+									recipe_ingredients: {
+										only: [:weight],
+										include: {
+											ingredient: {
+												only: [:uuid, :name]
+											}
+										}
+									},
+									recipe_stars: {
+										only: [],
+										include: {
+											user: {
+												only: [:username]
+											}
+										}
+									}
+								}
+							}
+						}
+					},
 					recipe_meals: {
 						only: [:id, :multiplier, :planned_date],
 						include: {
@@ -68,8 +97,8 @@ class Api::V1::AuthController < ApplicationController
 									recipe_stars: {
 										only: [],
 										include: {
-											recipe: {
-												only: [:uuid]
+											user: {
+												only: [:username]
 											}
 										}
 									}

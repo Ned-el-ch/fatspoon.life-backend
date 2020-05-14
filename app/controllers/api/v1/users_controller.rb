@@ -130,8 +130,29 @@ class Api::V1::UsersController < ApplicationController
 					recipe_stars: {
 						only: [],
 						include: {
-							user: {
-								only: [:username]
+							recipe: {
+								only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
+								include: {
+									user: {
+										only: [:username]
+									},
+									recipe_ingredients: {
+										only: [:weight],
+										include: {
+											ingredient: {
+												only: [:uuid, :name]
+											}
+										}
+									},
+									recipe_stars: {
+										only: [],
+										include: {
+											user: {
+												only: [:username]
+											}
+										}
+									}
+								}
 							}
 						}
 					},
