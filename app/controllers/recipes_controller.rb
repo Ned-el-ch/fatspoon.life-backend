@@ -84,38 +84,6 @@ class RecipesController < ApplicationController
 			rs.recipe = recipe
 			rs.user = @user
 			if rs.save
-				# render json: recipe.to_json(
-				# 	only: [:title, :description, :imageLink, :prepTime, :cookingTime, :instructions, :servingCount, :uuid],
-				# 	include: {
-				# 		user: {
-				# 			only: [:username]
-				# 		},
-				# 		recipe_ingredients: {
-				# 			only: [:weight],
-				# 			include: {
-				# 				ingredient: {
-				# 					only: [:uuid, :name]
-				# 				}
-				# 			}
-				# 		},
-				# 		recipe_stars: {
-				# 			only: [],
-				# 			include: {
-				# 				user: {
-				# 					only: [:username]
-				# 				}
-				# 			}
-				# 		},
-				# 		recipe_meals: {
-				# 			only: [:planned_date, :multiplier],
-				# 			include: {
-				# 				recipe: {
-				# 					only: [:uuid]
-				# 				}
-				# 			}
-				# 		}
-				# 	}
-				# ), status: :accepted
 				render json: { success: 'recipe starred' }, status: :accepted
 			else
 				render json: { error: 'failed to find recipe' }, status: :not_acceptable
