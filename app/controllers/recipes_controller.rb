@@ -116,7 +116,7 @@ class RecipesController < ApplicationController
 				# 		}
 				# 	}
 				# ), status: :accepted
-				render json: { success: 'added to favorites' }, status: :accepted
+				render json: { success: 'recipe starred' }, status: :accepted
 			else
 				render json: { error: 'failed to find recipe' }, status: :not_acceptable
 			end
