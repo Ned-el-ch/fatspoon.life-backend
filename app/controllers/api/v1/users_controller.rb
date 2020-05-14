@@ -27,8 +27,8 @@ class Api::V1::UsersController < ApplicationController
 						recipe_stars: {
 							only: [],
 							include: {
-								recipe: {
-									only: [:uuid]
+								user: {
+									only: [:username]
 								}
 							}
 						}
@@ -39,6 +39,38 @@ class Api::V1::UsersController < ApplicationController
 					include: {
 						ingredient: {
 							only: [:uuid, :name]
+						}
+					}
+				},
+				recipe_stars: {
+					only: [],
+					include: {
+						recipe: {
+							only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
+							include: {
+								user: {
+									only: [:username]
+								},
+								recipe_ingredients: {
+									only: [:weight],
+									include: {
+										ingredient: {
+											only: [:uuid, :name]
+										},
+										recipe: {
+											only: [:uuid]
+										}
+									}
+								},
+								recipe_stars: {
+									only: [],
+									include: {
+										user: {
+											only: [:username]
+										}
+									}
+								}
+							}
 						}
 					}
 				},
@@ -65,8 +97,8 @@ class Api::V1::UsersController < ApplicationController
 								recipe_stars: {
 									only: [],
 									include: {
-										recipe: {
-											only: [:uuid]
+										user: {
+											only: [:username]
 										}
 									}
 								}
@@ -98,8 +130,8 @@ class Api::V1::UsersController < ApplicationController
 					recipe_stars: {
 						only: [],
 						include: {
-							recipe: {
-								only: [:uuid]
+							user: {
+								only: [:username]
 							}
 						}
 					},
@@ -164,8 +196,8 @@ class Api::V1::UsersController < ApplicationController
 						recipe_stars: {
 							only: [],
 							include: {
-								recipe: {
-									only: [:uuid]
+								user: {
+									only: [:username]
 								}
 							}
 						}
