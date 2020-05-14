@@ -34,9 +34,6 @@ class RecipesController < ApplicationController
 						include: {
 							ingredient: {
 								only: [:uuid, :name]
-							},
-							recipe: {
-								only: [:uuid]
 							}
 						}
 					},
