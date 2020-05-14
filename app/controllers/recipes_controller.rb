@@ -24,16 +24,27 @@ class RecipesController < ApplicationController
 			end
 			# render json: { recipe: recipe }, status: :accepted
 			render json: recipe.to_json(
-				only: [:title, :description],
+				only: [:title, :description, :prepTime, :cookingTime, :servingCount, :imageLink, :instructions, :uuid],
 				include: {
 					user: {
 						only: [:username]
 					},
 					recipe_ingredients: {
-						only: [:weight, :uuid],
+						only: [:weight],
 						include: {
 							ingredient: {
 								only: [:uuid, :name]
+							},
+							recipe: {
+								only: [:uuid]
+							}
+						}
+					},
+					recipe_stars: {
+						only: [],
+						include: {
+							user: {
+								only: [:username]
 							}
 						}
 					}
@@ -136,8 +147,8 @@ class RecipesController < ApplicationController
 								recipe_stars: {
 									only: [],
 									include: {
-										recipe: {
-											only: [:uuid]
+										user: {
+											only: [:username]
 										}
 									}
 								}
